@@ -1,139 +1,64 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import Logo from "../../assets/logo.svg";
-import { FiHome, FiBarChart2, FiSettings, FiUsers, FiClipboard, FiList, FiUser, FiHelpCircle, FiLogOut, FiToggleLeft, FiToggleRight, FiAlertCircle, FiEdit, FiDatabase, FiKey, FiShield, FiChevronDown } from "react-icons/fi";
+import React from "react";
+import Logo from "../../assets/Logo.svg";
+import { FiHome, FiAlertTriangle, FiTool, FiUserCheck, FiInfo, FiArrowUpRight } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
 
 export function AdminSidebar() {
   const location = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const isActive = (path) => location.pathname === path;
+  const menu = [
+    { label: "Home", icon: <FiHome />, href: "/admin/dashboard" },
+    { label: "Detection", icon: <FiAlertTriangle />, href: "/admin/detections" },
+    { label: "Extension", icon: <FiTool />, href: "/admin/extension" },
+    { label: "Supervision Status", icon: <FiUserCheck />, href: "/admin/supervision" },
+    { label: "Help / User Guide", icon: <FiInfo />, href: "/admin/help" },
+  ];
 
   return (
-    <aside
-      className={`h-screen flex flex-col transition-all duration-300 ease-in-out ${
-        isCollapsed ? "w-16" : "w-72"
-      } bg-white shadow-xl border-r border-gray-200 rounded-r-xl overflow-hidden`}
-      style={{ fontFamily: 'Poppins, sans-serif' }}
-    >
-      {/* Header */}
-      <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-indigo-100 to-white">
-        <div className="flex items-center gap-2">
-          <img src={Logo} alt="Murai-Logo" className="h-7" />
+    <aside className="bg-white h-screen w-64 flex flex-col justify-between py-6 px-0 border-r border-gray-100 shadow-sm" style={{ fontFamily: 'Poppins, sans-serif' }}>
+      <div>
+        {/* Logo */}
+        <div className="flex items-center mb-16 mt-2 pl-7">
+          <img src={Logo} alt="Murai-Logo" className="h-10" />
         </div>
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-2 rounded-lg hover:bg-indigo-100 focus-visible:ring-2 focus-visible:ring-indigo-400 transition-colors"
-          aria-label="Toggle sidebar"
-        >
-          {isCollapsed ? <FiToggleRight /> : <FiToggleLeft />}
-        </button>
+        {/* Menu */}
+        <nav>
+          <ul className="flex flex-col gap-2 pl-7 pr-4">
+            {menu.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    className={`flex items-center gap-4 px-2 py-2 rounded-xl transition-all w-full
+                      ${isActive
+                        ? "bg-gray-100 text-black"
+                        : "text-[#787878] hover:bg-gray-50 hover:text-black"}
+                    `}
+                    style={{ fontSize: '16px', fontWeight: '400' }}
+                  >
+                    <span className="text-xl flex-shrink-0">{item.icon}</span>
+                    <span className="pl-1" style={{ fontSize: '16px', fontWeight: '400' }}>{item.label}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
-
-      <nav className="flex-1 overflow-y-auto px-2 py-4">
-        {/* ADMIN DASHBOARD */}
-        <div className="mb-4">
-          <p className="px-4 text-xs text-gray-400 font-semibold mb-2 tracking-widest">ADMIN DASHBOARD</p>
-          <ul className="space-y-1">
-            <li>
-              <Link to="/admin/dashboard" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/dashboard") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/dashboard") ? "page" : undefined}>
-                <FiHome className="text-lg" />
-                {!isCollapsed && <span>Dashboard</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/heatmap" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/heatmap") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/heatmap") ? "page" : undefined}>
-                <FiBarChart2 className="text-lg" />
-                {!isCollapsed && <span>Flagged Word Heatmap</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/performance" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/performance") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/performance") ? "page" : undefined}>
-                <FiDatabase className="text-lg" />
-                {!isCollapsed && <span>Model Performance</span>}
-                </Link>
-            </li>
-          </ul>
+      {/* Bottom section: Upgrade Card + User Box */}
+      <div className="flex flex-col gap-3 mb-4 px-4">
+        {/* Upgrade Card */}
+        <div className="px-3 py-4 rounded-xl bg-gradient-to-b from-gray-100 to-white text-center flex flex-col items-center">
+          <span className="font-semibold text-sm mb-1">Update to Pro</span>
+          <span className="text-xs text-gray-500 mb-3">Get 1 month free<br/>and unlock</span>
+          <button className="bg-black text-white rounded-full px-6 py-2 text-sm font-semibold">Upgrade</button>
         </div>
-
-        {/* TOOLS */}
-        <div className="mb-4">
-          <p className="px-4 text-xs text-gray-400 font-semibold mb-2 tracking-widest">TOOLS</p>
-          <ul className="space-y-1">
-            <li>
-              <Link to="/admin/settings" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/settings") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/settings") ? "page" : undefined}>
-                <FiSettings className="text-lg" />
-                {!isCollapsed && <span>Settings</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/users" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/users") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/users") ? "page" : undefined}>
-                <FiUsers className="text-lg" />
-                {!isCollapsed && <span>Users</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/reports" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/reports") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/reports") ? "page" : undefined}>
-                <FiClipboard className="text-lg" />
-                {!isCollapsed && <span>Reports</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/system" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/system") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/system") ? "page" : undefined}>
-                <FiDatabase className="text-lg" />
-                {!isCollapsed && <span>System</span>}
-              </Link>
-            </li>
-          </ul>
+        {/* User Box */}
+        <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3 text-[#787878] text-sm font-medium shadow-sm">
+          <span>Mhark Anthony P.</span>
+          <FiArrowUpRight className="text-lg" />
         </div>
-
-        {/* ADMIN DASHBOARD */}
-          <div className="mb-4">
-          <p className="px-4 text-xs text-gray-400 font-semibold mb-2 tracking-widest">ADMIN DASHBOARD</p>
-          <ul className="space-y-1">
-            <li>
-              <Link to="/admin/dashboard" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/dashboard") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/dashboard") ? "page" : undefined}>
-                <FiHome className="text-lg" />
-                {!isCollapsed && <span>Dashboard</span>}
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/heatmap" className={`group flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium ${isActive("/admin/heatmap") ? "bg-indigo-100 text-indigo-700 shadow-sm" : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"}`}
-                aria-current={isActive("/admin/heatmap") ? "page" : undefined}>
-                <FiBarChart2 className="text-lg" />
-                {!isCollapsed && <span>Flagged Word Heatmap</span>}
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      {/* User Profile Section */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-700">
-        <button className="w-full bg-gray-700 hover:bg-gray-600 transition-colors py-3 px-4 rounded-lg flex items-center justify-between group">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-              A
-            </div>
-            {!isCollapsed && (
-              <div className="ml-3 text-left">
-                <p className="text-sm font-medium text-white">Admin User</p>
-                <p className="text-xs text-gray-400">Administrator</p>
-              </div>
-            )}
-          </div>
-          {!isCollapsed && (
-            <span className="text-gray-400 group-hover:text-white">⚙️</span>
-          )}
-        </button>
       </div>
     </aside>
   );
