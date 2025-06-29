@@ -34,11 +34,11 @@ export function AdminSidebar() {
             </button>
           </div>
         )}
-        {/* Logo and Menu together */}
-        {isOpen && (
-          <div className="flex flex-col pl-7 pr-4 mt-10">
+        {/* Logo and Menu together (logo only when open) */}
+        <div className={`flex flex-col ${isOpen ? "pl-7 pr-4 mt-10" : "items-center"}`}>
+          {isOpen && (
             <div className="flex items-center mt-1 mb-14">
-              <img src={Logo} alt="Murai-Logo" className="h-10 " />
+              <img src={Logo} alt="Murai-Logo" className="h-10" />
               <button
                 className="ml-auto p-2 rounded-full hover:bg-gray-100 transition"
                 onClick={() => setIsOpen(false)}
@@ -47,26 +47,26 @@ export function AdminSidebar() {
                 <FiChevronLeft size={22} />
               </button>
             </div>
-            <nav className="flex flex-col gap-2">
-              {menu.map((item) => {
-                const isActive = location.pathname === item.href;
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className={`flex items-center gap-4 px-2 py-2 rounded-xl w-full transition-all
-                      ${isActive ? "bg-gray-100 text-black" : "text-[#787878] hover:bg-gray-50 hover:text-black"}`}
-                    style={{ fontSize: '16px', fontWeight: '300' }}
-                    aria-label={item.label}
-                  >
-                    <span className="text-xl flex-shrink-0">{item.icon}</span>
-                    <span className="pl-1" style={{ fontSize: '16px', fontWeight: '300' }}>{item.label}</span>
-                  </a>
-                );
-              })}
-            </nav>
-          </div>
-        )}
+          )}
+          <nav className={`flex flex-col gap-2 ${isOpen ? "" : "items-center"}`}>
+            {menu.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center ${isOpen ? "gap-4 px-2 py-2 rounded-xl w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-gray-100 text-black" : "text-[#787878] hover:bg-gray-50 hover:text-black"}`}
+                  style={{ fontSize: '16px', fontWeight: '300' }}
+                  aria-label={item.label}
+                >
+                  <span className="text-xl flex-shrink-0">{item.icon}</span>
+                  {isOpen && <span className="pl-1" style={{ fontSize: '16px', fontWeight: '300' }}>{item.label}</span>}
+                </a>
+              );
+            })}
+          </nav>
+        </div>
       </div>
       {/* Bottom: Upgrade/User/Logout */}
       <div className={`flex flex-col gap-3 mb-4 ${isOpen ? "px-4" : "items-center"}`}>
