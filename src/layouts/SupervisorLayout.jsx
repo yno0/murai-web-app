@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { SupervisorSidebar } from "../components/supervisor/supervisorSidebar";
+import { SupervisorSidebar } from "../components/supervisor/sidebar";
 
 export default function SupervisorLayout() {
     return (

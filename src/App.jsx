@@ -3,35 +3,30 @@ import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import ClientLayout from "./layouts/ClientLayout";
 import SupervisorLayout from "./layouts/SupervisorLayout";
+import ForgotPassword from "./pages/ForgotPass";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import LandingPage from "./pages/landing/LandingPage";
 export function App() {
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" />
+
 
         {/* Client Routes */}
-        <Route path="/client" element={<ClientLayout />}>
-          <Route path="dashboard" element={<div>Client Dashboard</div>} />
-          <Route path="profile" element={<div>Client Profile</div>} />
-          <Route path="settings" element={<div>Client Settings</div>} />
-          <Route path="*" element={<div>Client Not Found</div>} />
-        </Route>
+        <Route path="/client/*" element={<ClientLayout />} />
 
         {/* Admin Layout */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="dashboard" element={<div>Admin Dashboard</div>} />
-          <Route path="users" element={<div>Admin Users</div>} />
-          <Route path="settings" element={<div>Admin Settings</div>} />
-          <Route path="*" element={<div>Admin Not Found</div>} />
-        </Route>
+        <Route path="/admin/*" element={<AdminLayout />} />
 
-        <Route path="/supervisor" element={<SupervisorLayout />}>
-          <Route path="dashboard" element={<div>Supervisor Dashboard</div>} />
-          <Route path="users" element={<div>Supervisor Users</div>} />
-          <Route path="settings" element={<div>Supervisor Settings</div>} />
-          <Route path="*" element={<div>Supervisor Not Found</div>} />
-        </Route>
+        {/* Supervisor Layout */}
+        <Route path="/supervisor/*" element={<SupervisorLayout />} />
       </Routes>
     </Router>
   );
