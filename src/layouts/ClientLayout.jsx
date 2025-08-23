@@ -6,18 +6,22 @@ import Detection from '../pages/client/Detection';
 import Extension from '../pages/client/Extension';
 import SupervisionStatus from '../pages/client/SupervisionStatus';
 import Help from '../pages/client/Help';
+import Groups from '../pages/client/Group';
+import GroupDetails from '../pages/client/GroupDetails';
 
 export default function ClientLayout() {
     return (
-        <div className="flex">
-           <ClientSidebar/>
-            <main className="flex-1 p-6 ">
+        <div className="flex h-screen">
+           <ClientSidebar key="client-sidebar" />
+            <main className="flex-1 p-6 overflow-auto">
                 <Routes>
                   <Route path="dashboard" element={<Home />} />
                   <Route path="detections" element={<Detection />} />
                   <Route path="extension" element={<Extension />} />
+                  <Route path="group" element={<Groups />} />
                   <Route path="supervision" element={<SupervisionStatus />} />
                   <Route path="help" element={<Help />} />
+                  <Route path = "group-details" element={<GroupDetails />} />
                 </Routes>
                 <Outlet />
             </main>

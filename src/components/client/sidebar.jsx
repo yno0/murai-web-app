@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import Logo from "../../assets/Logo.svg";
-import { FiHome, FiAlertTriangle, FiTool, FiUserCheck, FiInfo, FiArrowUpRight, FiChevronLeft, FiMenu, FiLogOut, FiSettings, FiUser, FiChevronUp, FiChevronDown } from "react-icons/fi";
+import { FiHome, FiAlertTriangle, FiTool, FiUserCheck, FiInfo, FiArrowUpRight, FiChevronLeft, FiMenu, FiLogOut, FiSettings, FiUser, FiChevronUp, FiChevronDown, FiMoon, FiSun } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
 export function ClientSidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const accountMenuRef = useRef(null);
   const location = useLocation();
 
@@ -25,20 +26,53 @@ export function ClientSidebar() {
     };
   }, [showAccountMenu]);
 
-  const menu = [
-    { label: "Home", icon: <FiHome />, href: "/client/dashboard" },
+  const mainMenu = [
+    { label: "Overview", icon: <FiHome />, href: "/client/dashboard" },
     { label: "Detection", icon: <FiAlertTriangle />, href: "/client/detections" },
+    { label: "Report", icon: <FiUser />, href: "/client/report" },
+  ];
+
+  const toolsMenu = [
     { label: "Extension", icon: <FiTool />, href: "/client/extension" },
-    { label: "Supervision Status", icon: <FiUserCheck />, href: "/client/supervision" },
+    { label: "Group", icon: <FiUserCheck />, href: "/client/group" },
+  ];
+
+  const supportMenu = [
     { label: "Help", icon: <FiInfo />, href: "/client/help" },
   ];
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    // TODO: Implement actual dark mode logic here
+    // You might want to use a theme context or CSS variables
+  };
+
   const AccountMenu = (
-    <div ref={accountMenuRef} className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 w-48 bg-white rounded-xl shadow-lg border border-gray-100 flex flex-col py-2 animate-fade-in">
-      <button className="flex items-center gap-2 px-4 py-2 text-[#787878] hover:bg-gray-50 hover:text-black transition text-sm" onClick={() => setShowAccountMenu(false)}>
+    <div ref={accountMenuRef} className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 w-48 bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col py-2 animate-fade-in">
+      <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" onClick={() => setShowAccountMenu(false)}>
         <FiSettings /> <span>Settings</span>
       </button>
-      <button className="flex items-center gap-2 px-4 py-2 text-[#787878] hover:bg-gray-50 hover:text-black transition text-sm" onClick={() => setShowAccountMenu(false)}>
+      <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" onClick={() => setShowAccountMenu(false)}>
+        <FiUser /> <span>Billing & Usage</span>
+      </button>
+      <button 
+        className="flex items-center justify-between w-full px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" 
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDarkMode();
+        }}
+      >
+        <div className="flex items-center gap-2">
+          {isDarkMode ? <FiMoon /> : <FiSun />}
+          <span>Dark Mode</span>
+        </div>
+        <div className={`w-8 h-4 rounded-full transition-colors duration-200 ease-in-out relative ${isDarkMode ? 'bg-gray-800' : 'bg-gray-300'}`}>
+          <div className={`absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white transition-transform duration-200 ease-in-out ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
+        </div>
+      </button>
+      
+      <div className="border-t border-gray-200 my-2"></div>
+      <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" onClick={() => setShowAccountMenu(false)}>
         <FiLogOut /> <span>Logout</span>
       </button>
     </div>
@@ -46,7 +80,7 @@ export function ClientSidebar() {
 
   return (
     <aside
-      className={`bg-white h-screen flex flex-col justify-between border-r border-gray-100 shadow-sm transition-all duration-300 ${isOpen ? "w-64" : "w-16"}`}
+      className={`bg-white h-screen flex flex-col justify-between border-r border-gray-200/30 shadow-sm transition-all duration-300 ${isOpen ? "w-64" : "w-16"}`}
       style={{ fontFamily: 'Poppins, sans-serif', position: 'relative' }}
     >
       {/* Top: Toggle Button (closed) and Logo/Menu (open) */}
@@ -62,52 +96,96 @@ export function ClientSidebar() {
             </button>
           </div>
         )}
-        <div className={`flex flex-col ${isOpen ? "pl-7 pr-4 mt-10" : "items-center"}`}>
+        <div className={`flex flex-col ${isOpen ? "pl-6 pr-3 mt-8" : "items-center"}`}>
           {isOpen && (
-            <div className="flex items-center mt-1 mb-18">
-              <img src={Logo} alt="Murai-Logo" className="h-10" />
+            <div className="flex items-center mt-1 mb-12">
+              <img src={Logo} alt="Murai-Logo" className="h-9" />
               <button
-                className="ml-auto p-2 rounded-full hover:bg-gray-100 transition"
+                className="ml-auto p-1.5 rounded-full hover:bg-gray-100 transition"
                 onClick={() => setIsOpen(false)}
                 aria-label="Close sidebar"
               >
-                <FiChevronLeft size={22} />
+                <FiChevronLeft size={20} />
               </button>
             </div>
           )}
-          <nav className={`flex flex-col gap-2 ${isOpen ? "" : "items-center"}`}>
-            {menu.map((item) => {
+          <nav className={`flex flex-col gap-0.5 ${isOpen ? "" : "items-center"}`}>
+            {/* Main Menu Items */}
+            {mainMenu.map((item) => {
               const isActive = location.pathname === item.href;
               return (
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-4 px-2 py-2 rounded-xl w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-gray-100 text-black" : "text-[#787878] hover:bg-gray-50 hover:text-black"}`}
-                  style={{ fontSize: '16px', fontWeight: '200' }}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-1.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-gray-100 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                  style={{ fontSize: '15px', fontWeight: '400' }}
                   aria-label={item.label}
                 >
-                  <span className="text-xl flex-shrink-0">{item.icon}</span>
-                  {isOpen && <span className="pl-1" style={{ fontSize: '16px', fontWeight: '200' }}>{item.label}</span>}
+                  <span className="text-lg flex-shrink-0">{item.icon}</span>
+                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
                 </a>
               );
             })}
+
+            {/* First Separator */}
+            {isOpen && <div className="border-t border-gray-100 my-1.5 mx-3"></div>}
+
+            {/* Tools Menu Items */}
+            {toolsMenu.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-1.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-gray-100 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                  style={{ fontSize: '15px', fontWeight: '400' }}
+                  aria-label={item.label}
+                >
+                  <span className="text-lg flex-shrink-0">{item.icon}</span>
+                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
+                </a>
+              );
+            })}
+
+            {/* Second Separator */}
+            {isOpen && <div className="border-t border-gray-100 my-1.5 mx-3"></div>}
+
+            {/* Support Menu Items */}
+            {supportMenu.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-1.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-gray-100 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                  style={{ fontSize: '15px', fontWeight: '400' }}
+                  aria-label={item.label}
+                >
+                  <span className="text-lg flex-shrink-0">{item.icon}</span>
+                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
+                </a>
+              );
+            })}
+
           </nav>
         </div>
       </div>
       {/* Bottom: Upgrade/User/Logout or Account Menu */}
-      <div className={`flex flex-col gap-3 mb-4 ${isOpen ? "px-4" : "items-center"} relative`}>
+      <div className={`flex flex-col gap-2 mb-3 ${isOpen ? "px-3" : "items-center"} relative`}>
         {isOpen ? (
           <>
             {/* Upgrade Card */}
-            <div className="px-3 py-4 rounded-xl bg-gradient-to-b from-gray-100 to-white text-center flex flex-col items-center">
-              <span className="font-semibold text-sm mb-1">Update to Pro</span>
-              <span className="text-xs text-gray-500 mb-3">Get 1 month free<br/>and unlock</span>
-              <button className="bg-black text-white rounded-full px-6 py-2 text-sm font-semibold">Upgrade</button>
+            <div className="px-3 py-3 rounded-lg bg-gradient-to-b from-gray-100 to-gray-50 text-center flex flex-col items-center">
+              <span className="font-semibold text-sm mb-1 text-gray-800">Update to Pro</span>
+              <span className="text-xs text-gray-600 mb-2 font-medium">Get 1 month free<br/>and unlock</span>
+              <button className="bg-gray-600 hover:bg-gray-700 text-white rounded-full px-5 py-1.5 text-sm font-semibold transition">Upgrade</button>
             </div>
             {/* User Box (clickable, horizontal row) */}
             <button
-              className="flex items-center justify-between bg-gradient-to-b from-gray-50 to-white border border-gray-200 rounded-xl px-4 py-3 text-[#787878] text-sm font-medium shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition group"
+              className="flex items-center justify-between bg-gradient-to-b from-gray-50 to-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 text-sm font-semibold shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 transition group"
               onClick={() => setShowAccountMenu((prev) => !prev)}
               aria-label="Account menu"
               type="button"
@@ -115,9 +193,9 @@ export function ClientSidebar() {
             >
               <span>Mhark Anthony P.</span>
               {showAccountMenu ? (
-                <FiChevronUp className="text-xl ml-2" />
+                <FiChevronUp className="text-lg ml-2" />
               ) : (
-                <FiChevronDown className="text-xl ml-2" />
+                <FiChevronDown className="text-lg ml-2" />
               )}
             </button>
             {showAccountMenu && AccountMenu}
@@ -126,7 +204,7 @@ export function ClientSidebar() {
           <>
             {/* Logout Icon (clickable) */}
             <button
-              className="p-2 rounded-full hover:bg-gray-100 transition text-[#787878]"
+              className="p-2 rounded-full hover:bg-gray-100 transition text-gray-600"
               aria-label="Account menu"
               onClick={() => setShowAccountMenu((prev) => !prev)}
               type="button"
@@ -134,11 +212,31 @@ export function ClientSidebar() {
               <FiLogOut size={22} />
             </button>
             {showAccountMenu && (
-              <div ref={accountMenuRef} className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 w-48 bg-white rounded-xl shadow-lg border border-gray-100 flex flex-col py-2 animate-fade-in">
-                <button className="flex items-center gap-2 px-4 py-2 text-[#787878] hover:bg-gray-50 hover:text-black transition text-sm" onClick={() => setShowAccountMenu(false)}>
+              <div ref={accountMenuRef} className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 w-48 bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col py-2 animate-fade-in">
+                <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" onClick={() => setShowAccountMenu(false)}>
                   <FiSettings /> <span>Settings</span>
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 text-[#787878] hover:bg-gray-50 hover:text-black transition text-sm" onClick={() => setShowAccountMenu(false)}>
+                <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" onClick={() => setShowAccountMenu(false)}>
+                  <FiUser /> <span>Billing & Usage</span>
+                </button>
+                <button 
+                  className="flex items-center justify-between w-full px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleDarkMode();
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    {isDarkMode ? <FiMoon /> : <FiSun />}
+                    <span>Dark Mode</span>
+                  </div>
+                  <div className={`w-8 h-4 rounded-full transition-colors duration-200 ease-in-out relative ${isDarkMode ? 'bg-gray-800' : 'bg-gray-300'}`}>
+                    <div className={`absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white transition-transform duration-200 ease-in-out ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
+                  </div>
+                </button>
+                
+                <div className="border-t border-gray-200 my-2"></div>
+                <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition text-sm" onClick={() => setShowAccountMenu(false)}>
                   <FiLogOut /> <span>Logout</span>
                 </button>
               </div>

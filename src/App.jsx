@@ -3,17 +3,18 @@ import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout";
 import ClientLayout from "./layouts/ClientLayout";
 import SupervisorLayout from "./layouts/SupervisorLayout";
-import ForgotPassword from "./pages/ForgotPass";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import ForgotPassword from "./pages/auth/ForgotPass";
+import UserLogin from "./pages/auth/UserLogin";
+import Register from "./pages/auth/register";
 import LandingPage from "./pages/landing/LandingPage";
+import AdminLogin from "./pages/auth/adminLogin";
 export function App() {
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" />
@@ -24,6 +25,7 @@ export function App() {
 
         {/* Admin Layout */}
         <Route path="/admin/*" element={<AdminLayout />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* Supervisor Layout */}
         <Route path="/supervisor/*" element={<SupervisorLayout />} />
