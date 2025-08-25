@@ -5,7 +5,7 @@ import ClientLayout from "./layouts/ClientLayout";
 import SupervisorLayout from "./layouts/SupervisorLayout";
 import ForgotPassword from "./pages/auth/ForgotPass";
 import UserLogin from "./pages/auth/UserLogin";
-import Register from "./pages/auth/register";
+import Register from "./pages/auth/Register";
 import LandingPage from "./pages/landing/LandingPage";
 import AdminLogin from "./pages/auth/adminLogin";
 export function App() {
