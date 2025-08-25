@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Logo from "../../assets/Logo.svg";
+import Logo from "../assets/Logo.svg";
 import { FiHome, FiAlertTriangle, FiTool, FiUserCheck, FiInfo, FiArrowUpRight, FiChevronLeft, FiMenu, FiLogOut, FiSettings, FiUser, FiChevronUp, FiChevronDown, FiMoon, FiSun } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
