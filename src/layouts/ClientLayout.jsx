@@ -8,6 +8,7 @@ import SupervisionStatus from '../pages/client/SupervisionStatus';
 import Help from '../pages/client/Help';
 import Groups from '../pages/client/Group';
 import GroupDetails from '../pages/client/GroupDetails';
+import Reports from '../pages/client/Report';
 
 export default function ClientLayout() {
     return (
@@ -21,7 +22,8 @@ export default function ClientLayout() {
                   <Route path="group" element={<Groups />} />
                   <Route path="supervision" element={<SupervisionStatus />} />
                   <Route path="help" element={<Help />} />
-                  <Route path = "group-details" element={<GroupDetails />} />
+                  <Route path = "group-details/:id" element={<GroupDetails />} />
+                  <Route path = "reports" element={<Reports />} />
                 </Routes>
                 <Outlet />
             </main>

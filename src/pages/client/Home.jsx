@@ -1,263 +1,321 @@
 import React, { useState } from 'react';
 import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  BarChart, Bar, AreaChart, Area
-} from 'recharts';
-import { Bell, Printer, CircleDot, Percent, MonitorDot, TrendingUp } from "lucide-react";
-
-// Dummy data - replace with actual API data later
-const trendData = [
-  { date: '2024-03-01', detections: 7 },
-  { date: '2024-03-02', detections: 15 },
-  { date: '2024-03-03', detections: 12 },
-  { date: '2024-03-04', detections: 17 },
-  { date: '2024-03-05', detections: 16 },
-  { date: '2024-03-06', detections: 20 },
-  { date: '2024-03-07', detections: 14 },
-];
-
-const sourceData = [
-  { 
-    source: 'Facebook',
-    detections: [4, 7, 5, 8, 6, 9, 4],
-    total: 43,
-    percentage: 40
-  },
-  {
-    source: 'Twitter',
-    detections: [2, 5, 6, 4, 7, 5, 8],
-    total: 37,
-    percentage: 35
-  },
-  {
-    source: 'Instagram',
-    detections: [1, 3, 4, 5, 3, 6, 2],
-    total: 24,
-    percentage: 25
-  }
-];
-
-const categoryData = [
-  { category: 'Harassment', count: 45 },
-  { category: 'Hate Speech', count: 32 },
-  { category: 'Misinformation', count: 28 },
-  { category: 'Spam', count: 15 },
-];
-
-const languageData = [
-  { language: 'English', percentage: 45 },
-  { language: 'Tagalog', percentage: 35 },
-  { language: 'Mixed', percentage: 20 },
-];
-
-const sourceDistribution = [
-  { source: 'Facebook', count: 156 },
-  { source: 'Twitter', count: 89 },
-  { source: 'Instagram', count: 67 },
-];
+  Bell, Printer, Shield, AlertTriangle, Users, Settings, 
+  FileText, Download, Plus, Eye, Activity, ChevronRight,
+  BarChart3, PieChart, TrendingUp, Clock
+} from "lucide-react";
 
 export default function Home() {
-  const [timeRange, setTimeRange] = useState('week');
+  const [activeSection, setActiveSection] = useState('overview');
   
-  // Dummy KPI data - replace with actual data
-  const kpiData = {
-    totalDetections: 156,
-    averageScore: 85,
-    activeMonitoring: 12,
-    detectionRate: '92%'
+  // Simple data for overview
+  const statusData = {
+    accountStatus: 'Active',
+    totalGroups: 2,
+    totalMembers: 5,
+    issuesFound: 12,
+    lastScan: '2 hours ago'
+  };
+
+  const quickActions = [
+    { label: 'View Reports', icon: FileText, action: () => console.log('View Reports'), href: '/client/report' },
+    { label: 'Create Group', icon: Plus, action: () => console.log('Create Group'), href: '/client/group' },
+    { label: 'Invite Member', icon: Users, action: () => console.log('Invite Member') },
+    { label: 'Settings', icon: Settings, action: () => console.log('Settings') },
+  ];
+
+  const navigationSections = [
+    { 
+      id: 'overview', 
+      label: 'Overview', 
+      icon: Eye, 
+      description: 'Account status and quick summary'
+    },
+    { 
+      id: 'groups', 
+      label: 'My Groups', 
+      icon: Users, 
+      description: 'Manage your family groups and members',
+      href: '/client/group'
+    },
+    { 
+      id: 'activity', 
+      label: 'Recent Activity', 
+      icon: Activity, 
+      description: 'Latest scans and findings'
+    },
+    { 
+      id: 'reports', 
+      label: 'Reports & Analytics', 
+      icon: BarChart3, 
+      description: 'View detailed reports and insights',
+      href: '/client/detections'
+    },
+  ];
+
+  const recentActivity = [
+    { type: 'New Member Added', account: 'Sarah joined "Family Group"', time: '2 hours ago', status: 'success' },
+    { type: 'Issue Found', account: 'John - Instagram Account', time: '1 day ago', status: 'warning' },
+    { type: 'Group Created', account: '"Extended Family" group', time: '3 days ago', status: 'info' },
+    { type: 'Report Generated', account: 'All Family Members', time: '1 week ago', status: 'success' },
+  ];
+
+  const myGroups = [
+    { 
+      name: 'Family Group', 
+      members: 3, 
+      role: 'Admin', 
+      lastActivity: '2 hours ago',
+      description: 'Main family protection group'
+    },
+    { 
+      name: 'Extended Family', 
+      members: 2, 
+      role: 'Admin', 
+      lastActivity: '1 day ago',
+      description: 'Cousins and relatives'
+    },
+  ];
+
+  const groupMembers = [
+    { name: 'John Pentinio', role: 'Member', accounts: 2, status: 'Protected', lastSeen: '1 hour ago' },
+    { name: 'Sarah Pentinio', role: 'Member', accounts: 3, status: 'Protected', lastSeen: '3 hours ago' },
+    { name: 'Mike Pentinio', role: 'Member', accounts: 1, status: 'Pending', lastSeen: '1 day ago' },
+  ];
+
+  const renderSectionContent = () => {
+    switch (activeSection) {
+      case 'overview':
+        return (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* My Groups */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center mb-4">
+                <Users className="w-5 h-5 text-gray-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-900">My Groups</h3>
+              </div>
+              <p className="text-2xl font-medium text-gray-900 mb-2">{statusData.totalGroups}</p>
+              <p className="text-sm text-gray-500">Family protection groups</p>
+            </div>
+
+            {/* Total Members */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center mb-4">
+                <Shield className="w-5 h-5 text-gray-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-900">Protected Members</h3>
+              </div>
+              <p className="text-2xl font-medium text-gray-900 mb-2">{statusData.totalMembers}</p>
+              <p className="text-sm text-gray-500">Family members under protection</p>
+            </div>
+
+            {/* Issues Found */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center mb-4">
+                <AlertTriangle className="w-5 h-5 text-gray-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-900">Issues Found</h3>
+              </div>
+              <p className="text-2xl font-medium text-gray-900 mb-2">{statusData.issuesFound}</p>
+              <p className="text-sm text-gray-500">Potential concerns detected</p>
+            </div>
+          </div>
+        );
+
+      case 'groups':
+        return (
+          <div className="space-y-6">
+            {/* My Groups */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-medium text-gray-900">My Groups</h3>
+                <button className="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm hover:bg-gray-800 transition-colors">
+                  Create New Group
+                </button>
+              </div>
+              <div className="space-y-4">
+                {myGroups.map((group, index) => (
+                  <div key={index} className="flex items-center justify-between p-4 border border-gray-100 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <Users className="w-5 h-5 text-gray-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{group.name}</p>
+                        <p className="text-sm text-gray-500">{group.description}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium text-gray-900">{group.members} members</p>
+                      <p className="text-xs text-gray-500">Role: {group.role}</p>
+                      <p className="text-xs text-gray-500">Last activity: {group.lastActivity}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Group Members */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-medium text-gray-900">Group Members</h3>
+                <button className="px-4 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                  Invite Member
+                </button>
+              </div>
+              <div className="space-y-4">
+                {groupMembers.map((member, index) => (
+                  <div key={index} className="flex items-center justify-between p-4 border border-gray-100 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <span className="text-sm font-medium text-blue-600">
+                          {member.name.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{member.name}</p>
+                        <p className="text-sm text-gray-500">{member.accounts} accounts • {member.role}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium text-gray-900">{member.status}</p>
+                      <p className="text-xs text-gray-500">Last seen: {member.lastSeen}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'activity':
+        return (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-6">Recent Activity</h3>
+            <div className="space-y-4">
+              {recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-center space-x-3 p-3 border-b border-gray-100 last:border-b-0">
+                  <Activity className="w-4 h-4 text-gray-400" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{activity.type}</p>
+                    <p className="text-xs text-gray-500">{activity.account}</p>
+                  </div>
+                  <span className="text-xs text-gray-500">{activity.time}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'reports':
+        return (
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-6">Reports & Analytics</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <a href="/client/detections" className="block p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <BarChart3 className="w-5 h-5 text-gray-400" />
+                    <div>
+                      <p className="font-medium text-gray-900">Detection Analytics</p>
+                      <p className="text-sm text-gray-500">View detailed threat analysis</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </div>
+              </a>
+              <a href="/client/report" className="block p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <FileText className="w-5 h-5 text-gray-400" />
+                    <div>
+                      <p className="font-medium text-gray-900">Generate Report</p>
+                      <p className="text-sm text-gray-500">Create comprehensive reports</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </div>
+              </a>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Greeting Section */}
-        <div className="mb-12 flex justify-between">
+        {/* Header */}
+        <div className="mb-8 flex justify-between items-start">
           <div>
-          <h1 className="text-2xl font-medium text-gray-900">Welcome back to MURAi, Mhark!</h1>
-          <p className="text-gray-500 text-sm mt-1">Here's your dashboard overview</p>
+            <h1 className="text-2xl font-medium text-gray-900">Welcome back, Mhark!</h1>
+            <p className="text-gray-500 text-sm mt-1">Your social media protection dashboard</p>
           </div>
-          <div className='flex gap-2 h-10'>
-           <button className="bg-gray-100 text-black border border-gray-200 px-3 py-2 rounded-md">
-             <Bell className="w-5 h-5" />
-           </button>
-           <button className="bg-gray-100 text-black border border-gray-200 px-4 py-2 rounded-md flex items-center gap-2">
-             <Printer className="w-4 h-4" />
-             Print
-           </button>
-          </div>
-        </div>
-
-        {/* KPI Cards */}
-        <div className="bg-white rounded-lg border border-gray-200 p-8 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 divide-x divide-gray-200">
-            <div className="flex items-center lg:pl-0">
-              <span className="text-gray-400 mr-3">
-                <CircleDot className="w-6 h-6" />
-              </span>
-              <div>
-                <h3 className="text-gray-400 text-xs uppercase tracking-wide mb-1">Total Detections</h3>
-                <p className="text-3xl font-medium text-gray-900">{kpiData.totalDetections}</p>
-              </div>
-            </div>
-            <div className="flex items-center lg:pl-8">
-              <span className="text-gray-400 mr-3">
-                <Percent className="w-6 h-6" />
-              </span>
-              <div>
-                <h3 className="text-gray-400 text-xs uppercase tracking-wide mb-1">Average Score</h3>
-                <p className="text-3xl font-medium text-gray-900">{kpiData.averageScore}%</p>
-              </div>
-            </div>
-            <div className="flex items-center lg:pl-8">
-              <span className="text-gray-400 mr-3">
-                <MonitorDot className="w-6 h-6" />
-              </span>
-              <div>
-                <h3 className="text-gray-400 text-xs uppercase tracking-wide mb-1">Active Monitoring</h3>
-                <p className="text-3xl font-medium text-gray-900">{kpiData.activeMonitoring}</p>
-              </div>
-            </div>
-            <div className="flex items-center lg:pl-8">
-              <span className="text-gray-400 mr-3">
-                <TrendingUp className="w-6 h-6" />
-              </span>
-              <div>
-                <h3 className="text-gray-400 text-xs uppercase tracking-wide mb-1">Detection Rate</h3>
-                <p className="text-3xl font-medium text-gray-900">{kpiData.detectionRate}</p>
-              </div>
-            </div>
+          <div className="flex gap-2">
+            <button className="bg-gray-100 text-black border border-gray-200 px-3 py-2 rounded-md">
+              <Bell className="w-5 h-5" />
+            </button>
+            <button className="bg-gray-100 text-black border border-gray-200 px-4 py-2 rounded-md flex items-center gap-2">
+              <Download className="w-4 h-4" />
+              Export
+            </button>
           </div>
         </div>
 
-        {/* Graph Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Overall Detection Trend */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-medium text-gray-900">Detection Trend</h2>
-              <div className="flex space-x-1">
-                <button
-                  onClick={() => setTimeRange('week')}
-                  className={`px-3 py-1 text-xs rounded ${timeRange === 'week' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  Week
-                </button>
-                <button
-                  onClick={() => setTimeRange('month')}
-                  className={`px-3 py-1 text-xs rounded ${timeRange === 'month' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  Month
-                </button>
-                <button
-                  onClick={() => setTimeRange('year')}
-                  className={`px-3 py-1 text-xs rounded ${timeRange === 'year' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  Year
-                </button>
-              </div>
-            </div>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendData}>
-                  <CartesianGrid stroke="#F3F4F6" strokeDasharray="0" />
-                  <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-                  <YAxis stroke="#9CA3AF" fontSize={12} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: 'none',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                    }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="detections" 
-                    stroke="#374151" 
-                    strokeWidth={1.5} 
-                    dot={{ fill: '#374151', r: 3 }} 
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {quickActions.map((action, index) => (
+              <button
+                key={index}
+                onClick={action.href ? () => window.location.href = action.href : action.action}
+                className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <action.icon className="w-6 h-6 text-gray-400 mb-2" />
+                <span className="text-sm font-medium text-gray-900">{action.label}</span>
+              </button>
+            ))}
           </div>
+        </div>
 
-          {/* Source Distribution */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-6">Distribution by Source</h2>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart 
-                  data={sourceData}
-                  layout="horizontal"
-                  margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+        {/* Navigation Sections */}
+        <div className="mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8">
+              {navigationSections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => section.href ? window.location.href = section.href : setActiveSection(section.id)}
+                  className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                    activeSection === section.id && !section.href
+                      ? 'border-gray-900 text-gray-900'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
                 >
-                  <CartesianGrid stroke="#F3F4F6" strokeDasharray="0" />
-                  <XAxis type="number" stroke="#9CA3AF" fontSize={12} />
-                  <YAxis dataKey="source" type="category" stroke="#9CA3AF" fontSize={12} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: 'none',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                    }}
-                  />
-                  <Bar 
-                    dataKey="total" 
-                    fill="#374151"
-                    radius={[0, 4, 4, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+                  <section.icon className="w-4 h-4" />
+                  <span>{section.label}</span>
+                </button>
+              ))}
+            </nav>
           </div>
+        </div>
 
-          {/* Categories */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-6">Detection Categories</h2>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={categoryData}>
-                  <CartesianGrid stroke="#F3F4F6" strokeDasharray="0" />
-                  <XAxis dataKey="category" stroke="#9CA3AF" fontSize={12} />
-                  <YAxis stroke="#9CA3AF" fontSize={12} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: 'none',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                    }}
-                  />
-                  <Bar dataKey="count" fill="#374151" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+        {/* Section Content */}
+        <div className="mb-8">
+          {renderSectionContent()}
+        </div>
 
-          {/* Language Distribution */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-6">Language Distribution</h2>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={languageData} layout="horizontal">
-                  <CartesianGrid stroke="#F3F4F6" strokeDasharray="0" />
-                  <XAxis type="number" stroke="#9CA3AF" fontSize={12} />
-                  <YAxis dataKey="language" type="category" stroke="#9CA3AF" fontSize={12} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'white', 
-                      border: 'none',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                    }}
-                  />
-                  <Bar dataKey="percentage" fill="#374151" radius={[0, 4, 4, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        {/* Last Scan Info */}
+        <div className="bg-gray-50 rounded-lg p-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Clock className="w-4 h-4 text-gray-400" />
+            <span className="text-sm text-gray-600">Last scan: {statusData.lastScan}</span>
           </div>
+          <button className="text-sm text-gray-900 font-medium hover:text-gray-700">
+            Run New Scan
+          </button>
         </div>
       </div>
     </div>
