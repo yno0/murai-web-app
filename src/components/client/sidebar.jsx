@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Logo from "../assets/Logo.svg";
+import Logo from "../../assets/Logo.svg";
 import { FiHome, FiAlertTriangle, FiTool, FiUserCheck, FiInfo, FiArrowUpRight, FiChevronLeft, FiMenu, FiLogOut, FiSettings, FiUser, FiChevronUp, FiChevronDown, FiMoon, FiSun } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
@@ -29,7 +29,7 @@ export function ClientSidebar() {
   const mainMenu = [
     { label: "Overview", icon: <FiHome />, href: "/client/dashboard" },
     { label: "Detection", icon: <FiAlertTriangle />, href: "/client/detections" },
-    { label: "Report", icon: <FiUser />, href: "/client/report" },
+    { label: "Report", icon: <FiUser />, href: "/client/reports" },
   ];
 
   const toolsMenu = [

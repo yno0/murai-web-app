@@ -9,6 +9,8 @@ import Help from '../pages/client/Help';
 import Groups from '../pages/client/Group';
 import GroupDetails from '../pages/client/GroupDetails';
 import Reports from '../pages/client/Report';
+import Settings from '../pages/client/Settings';
+import Billing from '../pages/client/Billing';
 
 export default function ClientLayout() {
     return (
@@ -22,8 +24,10 @@ export default function ClientLayout() {
                   <Route path="group" element={<Groups />} />
                   <Route path="supervision" element={<SupervisionStatus />} />
                   <Route path="help" element={<Help />} />
-                  <Route path = "group-details/:id" element={<GroupDetails />} />
-                  <Route path = "reports" element={<Reports />} />
+                  <Route path="group-details/:id" element={<GroupDetails />} />
+                  <Route path="reports" element={<Reports />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="billing" element={<Billing />} />
                 </Routes>
                 <Outlet />
             </main>
