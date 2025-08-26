@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/Logo.svg";
-import hero from "../../assets/hero-img.png";
+import Logo from "/src/assets/Logo.svg";
+import hero from "/src/assets/hero-img.png";
 import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 
 export default function LandingPage() {
