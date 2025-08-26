@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/Logo.svg";
 import hero from "../../assets/hero-img.png";
 import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 
@@ -18,7 +19,7 @@ export default function LandingPage() {
       <header>
         <nav className="flex justify-between items-center p-4 bg ml-6 mr-5">
           <div className="flex">
-            <img src="/Logo.svg" alt="Logo" />
+            <img src={Logo} alt="Logo" />
           </div>
           <div className="flex-auto w-2">
             <ul className="flex justify-center items-center gap-20">
