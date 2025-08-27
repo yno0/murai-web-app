@@ -83,7 +83,7 @@ export function ClientSidebar() {
 
   return (
     <aside
-      className={`bg-[#F5F7F9] h-screen flex flex-col justify-between border-r border-gray-200/30 transition-all duration-300 ${isOpen ? "w-72" : "w-16"}`}
+      className={`bg-[#F5F7F9] h-screen flex flex-col justify-between border-r border-gray-200/30 transition-all duration-300 ${isOpen ? "w-68" : "w-16"}`}
       style={{ fontFamily: 'Poppins, sans-serif', position: 'relative' }}
     >
       {/* Top: Toggle Button (closed) and Logo/Menu (open) */}
@@ -99,11 +99,14 @@ export function ClientSidebar() {
             </button>
           </div>
         )}
-        <div className={`flex flex-col ${isOpen ? "pl-6 pr-3 mt-8" : "items-center"}`}>
+        <div className={`flex flex-col ${isOpen ? "pl-6 pr-3 mt-4" : "items-center"}`}>
           {isOpen && (
             <>
               <div className="flex items-center mt-1 mb-6">
-                <img src={Logo} alt="Murai-Logo" className="h-9" />
+                <div className="flex items-end gap-2">
+                  <img src={Logo} alt="Murai-Logo" className="h-9" />
+                  <span className=" text-lg font-regular text-black">MURAi</span>
+                </div>
                 <button
                   className="ml-auto p-1.5 rounded-full hover:bg-gray-100 transition"
                   onClick={() => setIsOpen(false)}
@@ -126,8 +129,8 @@ export function ClientSidebar() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border-1 border-gray-50" : "text-black hover:bg-gray-50 hover:text-gray-800"}`}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
+                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
                   style={{ fontSize: '15px', fontWeight: '400' }}
                   aria-label={item.label}
                 >
@@ -139,7 +142,7 @@ export function ClientSidebar() {
 
             {/* Management Menu Items */}
             {isOpen && (
-              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-2">Management</span>
+              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-6">Management</span>
             )}
             {managementMenu.map((item) => {
               const isActive = location.pathname === item.href;
@@ -147,8 +150,8 @@ export function ClientSidebar() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-white text-[#015763] shadow-md font-semibold" : "text-black hover:bg-gray-50 hover:text-gray-800"}`}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
+                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
                   style={{ fontSize: '15px', fontWeight: '400' }}
                   aria-label={item.label}
                 >
@@ -160,7 +163,7 @@ export function ClientSidebar() {
 
             {/* Tools Menu Items */}
             {isOpen && (
-              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-2">Tools</span>
+              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-6">Tools</span>
             )}
             {toolsMenu.map((item) => {
               const isActive = location.pathname === item.href;
@@ -168,8 +171,8 @@ export function ClientSidebar() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-white text-[#015763] shadow-md font-semibold" : "text-black hover:bg-gray-50 hover:text-gray-800"}`}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
+                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
                   style={{ fontSize: '15px', fontWeight: '400' }}
                   aria-label={item.label}
                 >
