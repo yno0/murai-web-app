@@ -26,6 +26,12 @@ export function ClientSidebar() {
     };
   }, [showAccountMenu]);
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    // TODO: Implement actual dark mode logic here
+    // You might want to use a theme context or CSS variables
+  };
+
   const mainMenu = [
     { label: "Overview", icon: <FiHome />, href: "/client/dashboard" },
     { label: "Detection", icon: <FiAlertTriangle />, href: "/client/detections" },
@@ -40,15 +46,20 @@ export function ClientSidebar() {
     { label: "Extension", icon: <FiTool />, href: "/client/extension" },
   ];
 
-  const supportMenu = [
+  const lowerMenu = [
     { label: "Help", icon: <FiInfo />, href: "/client/help" },
+    { label: "Settings", icon: <FiSettings />, href: "/client/settings" },
+    { 
+      label: "Dark Mode", 
+      icon: isDarkMode ? <FiMoon /> : <FiSun />, 
+      onClick: toggleDarkMode,
+      rightElement: (
+        <div className={`w-8 h-4 rounded-full transition-colors duration-200 ease-in-out relative ${isDarkMode ? 'bg-green-500' : 'bg-gray-300'}`}>
+          <div className={`absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white transition-transform duration-200 ease-in-out ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
+        </div>
+      )
+    },
   ];
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    // TODO: Implement actual dark mode logic here
-    // You might want to use a theme context or CSS variables
-  };
 
   const AccountMenu = (
     <div ref={accountMenuRef} className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 w-48 bg-white rounded-xl shadow-lg border border-gray-200 flex flex-col py-2 animate-fade-in">
@@ -191,28 +202,33 @@ export function ClientSidebar() {
       <div className={`flex flex-col gap-2 mb-3 ${isOpen ? "px-3" : "items-center"} relative`}>
         {isOpen ? (
           <>
-            {/* Help Section */}
-            <div className="px-3 py-2 mb-2">
-              {supportMenu.map((item) => {
-                const isActive = location.pathname === item.href;
+            {/* Lower Menu Section */}
+            <div className="px-3 py-2">
+              {lowerMenu.map((item) => {
+                const isActive = item.href ? location.pathname === item.href : false;
+                const Element = item.href ? 'a' : 'button';
                 return (
-                  <a
+                  <Element
                     key={item.label}
                     href={item.href}
-                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg w-full transition-all
-                      ${isActive ? "bg-white text-[#015763] shadow-md font-semibold" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                    onClick={item.onClick}
+                    className={`flex items-center justify-between gap-2.5 px-3 py-2 rounded-lg w-full transition-all duration-200 ease-in-out
+                      ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
                     style={{ fontSize: '14px', fontWeight: '400' }}
                     aria-label={item.label}
                   >
-                    <span className="text-lg flex-shrink-0">{item.icon}</span>
-                    <span className="pl-0.5">{item.label}</span>
-                  </a>
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-lg flex-shrink-0">{item.icon}</span>
+                      <span className="pl-0.5">{item.label}</span>
+                    </div>
+                    {item.rightElement}
+                  </Element>
                 );
               })}
             </div>
             
             {/* Line below Help */}
-            <div className="border-t border-gray-200 mx-3 mb-3"></div>
+            <div className="border-t border-gray-200 mx-1 mb-1"></div>
             
             {/* User Box (clickable, horizontal row) */}
             <button
