@@ -32,9 +32,12 @@ export function ClientSidebar() {
     { label: "Report", icon: <FiUser />, href: "/client/reports" },
   ];
 
+  const managementMenu = [
+    { label: "Group", icon: <FiUserCheck />, href: "/client/group" },
+  ];
+
   const toolsMenu = [
     { label: "Extension", icon: <FiTool />, href: "/client/extension" },
-    { label: "Group", icon: <FiUserCheck />, href: "/client/group" },
   ];
 
   const supportMenu = [
@@ -80,7 +83,7 @@ export function ClientSidebar() {
 
   return (
     <aside
-      className={`bg-white h-screen flex flex-col justify-between border-r border-gray-200/30 shadow-sm transition-all duration-300 ${isOpen ? "w-64" : "w-16"}`}
+      className={`bg-[#F5F7F9] h-screen flex flex-col justify-between border-r border-gray-200/30 transition-all duration-300 ${isOpen ? "w-72" : "w-16"}`}
       style={{ fontFamily: 'Poppins, sans-serif', position: 'relative' }}
     >
       {/* Top: Toggle Button (closed) and Logo/Menu (open) */}
@@ -98,27 +101,33 @@ export function ClientSidebar() {
         )}
         <div className={`flex flex-col ${isOpen ? "pl-6 pr-3 mt-8" : "items-center"}`}>
           {isOpen && (
-            <div className="flex items-center mt-1 mb-12">
-              <img src={Logo} alt="Murai-Logo" className="h-9" />
-              <button
-                className="ml-auto p-1.5 rounded-full hover:bg-gray-100 transition"
-                onClick={() => setIsOpen(false)}
-                aria-label="Close sidebar"
-              >
-                <FiChevronLeft size={20} />
-              </button>
-            </div>
+            <>
+              <div className="flex items-center mt-1 mb-6">
+                <img src={Logo} alt="Murai-Logo" className="h-9" />
+                <button
+                  className="ml-auto p-1.5 rounded-full hover:bg-gray-100 transition"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Close sidebar"
+                >
+                  <FiChevronLeft size={20} />
+                </button>
+              </div>
+              <div className="border-t border-gray-200 mb-6 mx-3"></div>
+            </>
           )}
-          <nav className={`flex flex-col gap-0.5 ${isOpen ? "" : "items-center"}`}>
+          <nav className={`flex flex-col gap-0 ${isOpen ? "" : "items-center"}`}>
             {/* Main Menu Items */}
+            {isOpen && (
+              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide">Main</span>
+            )}
             {mainMenu.map((item) => {
               const isActive = location.pathname === item.href;
               return (
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-1.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-gray-100 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border-1 border-gray-50" : "text-black hover:bg-gray-50 hover:text-gray-800"}`}
                   style={{ fontSize: '15px', fontWeight: '400' }}
                   aria-label={item.label}
                 >
@@ -128,18 +137,39 @@ export function ClientSidebar() {
               );
             })}
 
-            {/* First Separator */}
-            {isOpen && <div className="border-t border-gray-100 my-1.5 mx-3"></div>}
+            {/* Management Menu Items */}
+            {isOpen && (
+              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-2">Management</span>
+            )}
+            {managementMenu.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-white text-[#015763] shadow-md font-semibold" : "text-black hover:bg-gray-50 hover:text-gray-800"}`}
+                  style={{ fontSize: '15px', fontWeight: '400' }}
+                  aria-label={item.label}
+                >
+                  <span className="text-lg flex-shrink-0">{item.icon}</span>
+                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
+                </a>
+              );
+            })}
 
             {/* Tools Menu Items */}
+            {isOpen && (
+              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-2">Tools</span>
+            )}
             {toolsMenu.map((item) => {
               const isActive = location.pathname === item.href;
               return (
                 <a
                   key={item.label}
                   href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-1.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-gray-100 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
+                    ${isActive ? "bg-white text-[#015763] shadow-md font-semibold" : "text-black hover:bg-gray-50 hover:text-gray-800"}`}
                   style={{ fontSize: '15px', fontWeight: '400' }}
                   aria-label={item.label}
                 >
@@ -149,26 +179,7 @@ export function ClientSidebar() {
               );
             })}
 
-            {/* Second Separator */}
-            {isOpen && <div className="border-t border-gray-100 my-1.5 mx-3"></div>}
 
-            {/* Support Menu Items */}
-            {supportMenu.map((item) => {
-              const isActive = location.pathname === item.href;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-1.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all
-                    ${isActive ? "bg-gray-100 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
-                  style={{ fontSize: '15px', fontWeight: '400' }}
-                  aria-label={item.label}
-                >
-                  <span className="text-lg flex-shrink-0">{item.icon}</span>
-                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
-                </a>
-              );
-            })}
 
           </nav>
         </div>
@@ -177,21 +188,41 @@ export function ClientSidebar() {
       <div className={`flex flex-col gap-2 mb-3 ${isOpen ? "px-3" : "items-center"} relative`}>
         {isOpen ? (
           <>
-            {/* Upgrade Card */}
-            <div className="px-3 py-3 rounded-lg bg-gradient-to-b from-gray-100 to-gray-50 text-center flex flex-col items-center">
-              <span className="font-semibold text-sm mb-1 text-gray-800">Update to Pro</span>
-              <span className="text-xs text-gray-600 mb-2 font-medium">Get 1 month free<br/>and unlock</span>
-              <button className="bg-gray-600 hover:bg-gray-700 text-white rounded-full px-5 py-1.5 text-sm font-semibold transition">Upgrade</button>
+            {/* Help Section */}
+            <div className="px-3 py-2 mb-2">
+              {supportMenu.map((item) => {
+                const isActive = location.pathname === item.href;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg w-full transition-all
+                      ${isActive ? "bg-white text-[#015763] shadow-md font-semibold" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"}`}
+                    style={{ fontSize: '14px', fontWeight: '400' }}
+                    aria-label={item.label}
+                  >
+                    <span className="text-lg flex-shrink-0">{item.icon}</span>
+                    <span className="pl-0.5">{item.label}</span>
+                  </a>
+                );
+              })}
             </div>
+            
+            {/* Line below Help */}
+            <div className="border-t border-gray-200 mx-3 mb-3"></div>
+            
             {/* User Box (clickable, horizontal row) */}
             <button
-              className="flex items-center justify-between bg-gradient-to-b from-gray-50 to-white border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 text-sm font-semibold shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 transition group"
+              className="flex items-center justify-between bg-gradient-to-b from-gray-50 to-white border border-gray-200 rounded-lg px-3 py-3 text-gray-700 text-sm font-semibold shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-gray-400 transition group"
               onClick={() => setShowAccountMenu((prev) => !prev)}
               aria-label="Account menu"
               type="button"
               tabIndex={0}
             >
-              <span>Mhark Anthony P.</span>
+              <div className="flex flex-col items-start">
+                <span>Mhark Anthony P.</span>
+                <span className="text-xs text-gray-500 font-normal">mhark@example.com</span>
+              </div>
               {showAccountMenu ? (
                 <FiChevronUp className="text-lg ml-2" />
               ) : (
@@ -199,6 +230,13 @@ export function ClientSidebar() {
               )}
             </button>
             {showAccountMenu && AccountMenu}
+            
+            {/* Company Footer */}
+            {isOpen && (
+              <div className="px-3 py-2 mt-2">
+                <span className="text-xs text-gray-400 text-center block">© 2025 MURAI Inc.</span>
+              </div>
+            )}
           </>
         ) : (
           <>
