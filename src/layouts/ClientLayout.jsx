@@ -11,6 +11,7 @@ import GroupDetails from '../pages/client/GroupDetails';
 import Reports from '../pages/client/Report';
 import Settings from '../pages/client/Settings';
 import Billing from '../pages/client/Billing';
+import Analytics from '../pages/client/Analytics';
 
 export default function ClientLayout() {
     return (
@@ -28,6 +29,7 @@ export default function ClientLayout() {
                   <Route path="reports" element={<Reports />} />
                   <Route path="settings" element={<Settings />} />
                   <Route path="billing" element={<Billing />} />
+                  <Route path="analytics" element={<Analytics />} />
                 </Routes>
                 <Outlet />
             </main>

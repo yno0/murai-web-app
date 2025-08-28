@@ -34,7 +34,7 @@ export function ClientSidebar() {
 
   const mainMenu = [
     { label: "Overview", icon: <FiHome />, href: "/client/dashboard" },
-    { label: "Detection", icon: <FiAlertTriangle />, href: "/client/detections" },
+    { label: "Analytics", icon: <FiAlertTriangle />, href: "/client/analytics" },
     { label: "Report", icon: <FiUser />, href: "/client/reports" },
   ];
 
