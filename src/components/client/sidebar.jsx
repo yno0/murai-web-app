@@ -96,7 +96,7 @@ export function ClientSidebar() {
 
   return (
     <aside
-      className={`bg-white h-screen flex flex-col justify-between border-r border-gray-200/30 transition-all duration-300 pt-3 ${isOpen ? "w-68" : "w-16"}`}
+      className={`bg-white h-screen flex flex-col justify-between border-r border-gray-200 sgha transition-all duration-300 pt-3 ${isOpen ? "w-68" : "w-16"}`}
       style={{ fontFamily: 'Poppins, sans-serif', position: 'relative' }}
     >
       {/* Top: Toggle Button (closed) and Logo/Menu (open) */}
@@ -118,7 +118,6 @@ export function ClientSidebar() {
               <div className="flex items-center mt-1 mb-6">
                 <div className="flex items-end gap-2">
                   <img src={Logo} alt="Murai-Logo" className="h-9" />
-                  <span className=" text-lg font-regular text-black">MURAi</span>
                 </div>
                 <button
                   className="ml-auto p-1.5 rounded-full hover:bg-gray-100 transition"
@@ -128,7 +127,7 @@ export function ClientSidebar() {
                   <FiChevronLeft size={20} />
                 </button>
               </div>
-              <div className="border-t border-gray-200 mb-10 -ml-6 -mr-3"></div>
+              <div className="border-t border-gray-300 mb-10 -ml-6 -mr-3"></div>
             </>
           )}
           <nav className={`flex flex-col ${isOpen ? "gap-2" : "items-center gap-1.5"}`}>
