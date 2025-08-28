@@ -46,6 +46,8 @@ export function ClientSidebar() {
     { label: "Extension", icon: <FiTool />, href: "/client/extension" },
   ];
 
+  const menuItems = [...mainMenu, ...managementMenu, ...toolsMenu];
+
   const lowerMenu = [
     { label: "Help", icon: <FiInfo />, href: "/client/help" },
     { label: "Settings", icon: <FiSettings />, href: "/client/settings" },
@@ -94,7 +96,7 @@ export function ClientSidebar() {
 
   return (
     <aside
-      className={`bg-[#F5F7F9] h-screen flex flex-col justify-between border-r border-gray-200/30 transition-all duration-300 ${isOpen ? "w-68" : "w-16"}`}
+      className={`bg-white h-screen flex flex-col justify-between border-r border-gray-200/30 transition-all duration-300 pt-3 ${isOpen ? "w-68" : "w-16"}`}
       style={{ fontFamily: 'Poppins, sans-serif', position: 'relative' }}
     >
       {/* Top: Toggle Button (closed) and Logo/Menu (open) */}
@@ -126,75 +128,27 @@ export function ClientSidebar() {
                   <FiChevronLeft size={20} />
                 </button>
               </div>
-              <div className="border-t border-gray-200 mb-6 mx-3"></div>
+              <div className="border-t border-gray-200 mb-10 -ml-6 -mr-3"></div>
             </>
           )}
-          <nav className={`flex flex-col gap-0 ${isOpen ? "" : "items-center"}`}>
-            {/* Main Menu Items */}
-            {isOpen && (
-              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide">Main</span>
-            )}
-            {mainMenu.map((item) => {
+          <nav className={`flex flex-col ${isOpen ? "gap-2" : "items-center gap-1.5"}`}>
+            {menuItems.map((item) => {
               const isActive = location.pathname === item.href;
               return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
-                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
-                  style={{ fontSize: '15px', fontWeight: '400' }}
-                  aria-label={item.label}
-                >
-                  <span className="text-lg flex-shrink-0">{item.icon}</span>
-                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
-                </a>
+                <React.Fragment key={item.label}>
+                  <a
+                    href={item.href}
+                    className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2.5 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
+                      ${isActive ? "bg-[#015763] text-white shadow-sm font-semibold" : "text-gray-700 hover:bg-[#015763]/10 hover:text-[#015763] hover:shadow-sm"}`}
+                    style={{ fontSize: '16px', fontWeight: '400' }}
+                    aria-label={item.label}
+                  >
+                    <span className="text-lg flex-shrink-0">{item.icon}</span>
+                    {isOpen && <span className="pl-0.5" style={{ fontSize: '16px', fontWeight: '400' }}>{item.label}</span>}
+                  </a>
+                </React.Fragment>
               );
             })}
-
-            {/* Management Menu Items */}
-            {isOpen && (
-              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-6">Management</span>
-            )}
-            {managementMenu.map((item) => {
-              const isActive = location.pathname === item.href;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
-                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
-                  style={{ fontSize: '15px', fontWeight: '400' }}
-                  aria-label={item.label}
-                >
-                  <span className="text-lg flex-shrink-0">{item.icon}</span>
-                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
-                </a>
-              );
-            })}
-
-            {/* Tools Menu Items */}
-            {isOpen && (
-              <span className="text-xs text-gray-400 font-medium px-3 py-0.5 uppercase tracking-wide mt-6">Tools</span>
-            )}
-            {toolsMenu.map((item) => {
-              const isActive = location.pathname === item.href;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center ${isOpen ? "gap-2.5 px-3 py-2 rounded-lg w-full" : "justify-center p-2 rounded-lg w-10 h-10"} transition-all duration-200 ease-in-out
-                    ${isActive ? "bg-white text-[#015763] shadow-sm font-semibold border border-gray-100" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm"}`}
-                  style={{ fontSize: '15px', fontWeight: '400' }}
-                  aria-label={item.label}
-                >
-                  <span className="text-lg flex-shrink-0">{item.icon}</span>
-                  {isOpen && <span className="pl-0.5" style={{ fontSize: '15px', fontWeight: '400' }}>{item.label}</span>}
-                </a>
-              );
-            })}
-
-
-
           </nav>
         </div>
       </div>
@@ -250,12 +204,7 @@ export function ClientSidebar() {
             </button>
             {showAccountMenu && AccountMenu}
             
-            {/* Company Footer */}
-            {isOpen && (
-              <div className="px-3 py-2 mt-2">
-                <span className="text-xs text-gray-400 text-center block">© 2025 MURAI Inc.</span>
-              </div>
-            )}
+           
           </>
         ) : (
           <>
