@@ -49,44 +49,41 @@ export default function Help() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Header Section */}
-        <div className="mb-12">
-          <h1 className="text-2xl font-medium text-gray-900">Help & Support</h1>
-          <p className="text-gray-500 text-sm mt-1">Get assistance and answers to your questions</p>
-        </div>
+      <div className="max-w-7xl mx-auto px-3 py-2">
+        <h1 className="text-2xl font-medium text-gray-900 mb-6">Help & Support</h1>
+        <div className="border-b border-gray-200 -mx-3 mb-6"></div>
 
         {/* Contact Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex items-center mb-4">
-              <Mail className="w-6 h-6 text-gray-400 mr-3" />
-              <h3 className="text-lg font-medium text-gray-900">Email Support</h3>
+            <div className="flex items-center mb-3">
+              <Mail className="w-5 h-5 text-[#015763] mr-3" />
+              <h3 className="text-sm font-medium text-gray-900">Email Support</h3>
             </div>
-            <p className="text-gray-500">support@murai.com</p>
+            <p className="text-sm text-gray-500">support@murai.com</p>
           </div>
           
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex items-center mb-4">
-              <Phone className="w-6 h-6 text-gray-400 mr-3" />
-              <h3 className="text-lg font-medium text-gray-900">Phone Support</h3>
+            <div className="flex items-center mb-3">
+              <Phone className="w-5 h-5 text-[#015763] mr-3" />
+              <h3 className="text-sm font-medium text-gray-900">Phone Support</h3>
             </div>
-            <p className="text-gray-500">+1 (555) 123-4567</p>
+            <p className="text-sm text-gray-500">+1 (555) 123-4567</p>
           </div>
 
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex items-center mb-4">
-              <MessageSquare className="w-6 h-6 text-gray-400 mr-3" />
-              <h3 className="text-lg font-medium text-gray-900">Live Chat</h3>
+            <div className="flex items-center mb-3">
+              <MessageSquare className="w-5 h-5 text-[#015763] mr-3" />
+              <h3 className="text-sm font-medium text-gray-900">Live Chat</h3>
             </div>
-            <p className="text-gray-500">Available 24/7</p>
+            <p className="text-sm text-gray-500">Available 24/7</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* FAQ Section */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-xl font-medium text-gray-900 mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-sm font-medium text-gray-900 mb-6">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-gray-200 last:border-0 pb-4 last:pb-0">
@@ -94,15 +91,15 @@ export default function Help() {
                     className="w-full text-left flex justify-between items-center"
                     onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                   >
-                    <span className="font-medium text-gray-900">{faq.question}</span>
+                    <span className="text-sm font-medium text-gray-900">{faq.question}</span>
                     {expandedFaq === index ? (
-                      <ChevronUp className="w-5 h-5 text-gray-400" />
+                      <ChevronUp className="w-4 h-4 text-[#015763]" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-gray-400" />
+                      <ChevronDown className="w-4 h-4 text-[#015763]" />
                     )}
                   </button>
                   {expandedFaq === index && (
-                    <p className="mt-2 text-gray-500">{faq.answer}</p>
+                    <p className="mt-2 text-sm text-gray-500">{faq.answer}</p>
                   )}
                 </div>
               ))}
@@ -111,7 +108,7 @@ export default function Help() {
 
           {/* Contact Form */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-xl font-medium text-gray-900 mb-6">Contact Support</h2>
+            <h2 className="text-sm font-medium text-gray-900 mb-6">Contact Support</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -123,7 +120,7 @@ export default function Help() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015763] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 />
               </div>
@@ -138,7 +135,7 @@ export default function Help() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015763] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 />
               </div>
@@ -153,7 +150,7 @@ export default function Help() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015763] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 />
               </div>
@@ -168,14 +165,14 @@ export default function Help() {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows="4"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
+                  className="flex w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015763] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#015763] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#015763] text-white hover:bg-[#015763]/90 h-10 px-4 py-2 w-full"
               >
                 Send Message
               </button>
